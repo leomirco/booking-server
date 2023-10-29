@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>Tiledesk-stripe-payment</title>
+  <link rel="stylesheet" href="/css/base.css">
+  <script>
+  window.addEventListener("message", (event) => {
+    console.log('addEventListener_frame: ', event)
+    if(event.data){
+    //GET TOK  EN FROM PAGE TILEDESK
+    const token = document.getElementById("token");
+    console.log('token: ',token)
+    //token.value = JSON.stringify(event.data.token);
+    token.value = event.data.token;
+    console.log('token.value: ',event.data.token)
+    var projectId = document.getElementById("projectId");
+    //projectId.value = JSON.stringify(event.data.request.department.id_project);
+    if(event.data.request.id_project){
+      projectId.value = event.data.request.id_project;
+      // ESEMPIO PER LEGGERE LA MAIL DELL'UTENTE
+      //projectId.value = event.data.request.lead;  
+      console.log('projectId: ',projectId.value)
+    }
+    request_id.value = event.data.request.request_id;
+    console.log('request_id: ',request_id.value);
+       }
+}, false);
+ 
+  </script>  
+</head>
+
+<body>
+  <div id="form" class="container" style="display:flex; align-items: center; justify-content: center; text-align: center;">
+   <div class="row" id="updPay" style="display: block;">
+     <img src="https://booking-server.leomirco.repl.co/img/tiledesk_v1-1.png" width="130" height="auto"  />
+     <br><br>
+     <p class="subtitle" id="app_name" style="text-align:center; margin-bottom: 20px; margin-top: 0px;">Application configuration</p>
+      <div class="form-group">
+     <label class="input-label" style="text-align:center; margin-bottom: 0px; margin-top: 0px;">Read the<a href="https://gethelp.tiledesk.com/categories/stripe-payment/" target="_blank">Tutorials</a></label>
+      </div>
+
+     <hr><br>
+              <!-- Stripe publishable key -->
+          <div class="form-group">
+              <label class="input-label" for="stripe_publishable_key">Stripe publishable key</label>
+              <div style="display: flex; flex-direction: row;">
+                    <div style="display: flex; flex-direction: row; align-items: center;">
+                      <input type="text"  class="form-control copy-form custom-input" name="stripe_publishable_key" id="stripe_publishable_key" value="{{ stripe_publishable_key}}" placeholder="Enter the publishable key" oninput="reWrite('stripe_publishable_key')" readonly>
+                    </div>
+              </div>
+            <label class="input-error" id="app_err1" style="visibility: hidden;">The Stripe publishable key is required!</label>
+            </div>
+
+     
+             <!-- Stripe publishable key -->
+         <div class="form-group">
+            <label class="input-label" for="stripe_wehook_secret">Stripe wehook secret</label>
+             <div style="display: flex; flex-direction: row;">
+               <div style="display: flex; flex-direction: row; align-items: center;">
+                 <input type="text"  class="form-control copy-form custom-input" name="stripe_wehook_secret" id="stripe_wehook_secret" value="{{ stripe_wehook_secret}}" placeholder="Enter the wehook secret" oninput="reWrite('stripe_wehook_secret')" readonly>
+              </div>
+            </div>
+           <label class="input-error" id="app_err2" style="visibility: hidden;">The Stripe wehook secret is required!</label>
+           </div>
+
+      <!-- Stripe secret key -->
+         <div class="form-group">
+            <label class="input-label" for="stripe_secret_key">Stripe secret key</label>
+             <div style="display: flex; flex-direction: row;">
+               <div style="display: flex; flex-direction: row; align-items: center;">
+                 <input type="text"  class="form-control copy-form custom-input" name="stripe_secret_key" id="stripe_secret_key" value="{{ stripe_secret_key}}" placeholder="Enter the stripe secret key" oninput="reWrite('stripe_secret_key')" readonly>
+              </div>
+            </div>
+           <label class="input-error" id="app_err3" style="visibility: hidden;">The Stripe secret key is required!</label>
+           </div>
+     <hr><br>
+      <!-- Booking Sistem Integration API -->
+          <div class="form-group">
+              <label class="input-label" for="stripe_publishable_key">Booking System Integration API</label>
+              <div style="display: flex; flex-direction: row;">
+                    <div style="display: flex; flex-direction: row; align-items: center;">
+                       <input type="text" name="integration_sistem"  class="form-control copy-form custom-input" name="booking_sistem_integration_api" id="booking_sistem_integration_api" value="{{ booking_sistem_integration_api}}" placeholder="Enter the name of the Booking API" oninput="reWrite('booking_sistem_integration_api')" readonly>
+                  </select>
+                </div>
+              </div>
+            <label class="input-error" id="app_err1" style="visibility: hidden;">The name of the Booking API is required!</label>
+            </div>
+     <!-- Booking UserKey -->
+         <div class="form-group">
+            <label class="input-label" for="booking_userkey">Booking User Key</label>
+             <div style="display: flex; flex-direction: row;">
+               <div style="display: flex; flex-direction: row; align-items: center;">
+                 <input type="text"  class="form-control copy-form custom-input" name="booking_userkey" id="booking_userkey" value="{{ booking_userkey}}" placeholder="Enter the booking user key" oninput="reWrite('booking_userkey')" readonly>
+              </div>
+            </div>
+           <label class="input-error" id="app_err4" style="visibility: hidden;">The Booking user key is required!</label>
+           </div>
+      <!-- Booking APIURL -->
+         <div class="form-group">
+            <label class="input-label" for="booking_api_url">Booking API URL</label>
+             <div style="display: flex; flex-direction: row;">
+               <div style="display: flex; flex-direction: row; align-items: center;">
+                 <input type="text"  class="form-control copy-form custom-input" name="booking_api_url" id="booking_api_url" value="{{booking_api_url}}" placeholder="Enter the booking user key" oninput="reWrite('booking_api_url')" readonly>
+              </div>
+            </div>
+           <label class="input-error" id="app_err5" style="visibility: hidden;">The Booking API URL is required!</label>
+           </div>
+<!-- CustomerID -->
+         <div class="form-group">
+            <label class="input-label" for="customerid">Booking CustomerID</label>
+             <div style="display: flex; flex-direction: row;">
+               <div style="display: flex; flex-direction: row; align-items: center;">
+                 <input type="text"  class="form-control copy-form custom-input" name="customerid" id="booking_api_url" value="{{customerid}}" placeholder="Enter the customer id" oninput="reWrite('customerid')" readonly>
+              </div>
+            </div>
+           <label class="input-error" id="app_err6" style="visibility: hidden;">The CustomerId is required!</label>
+           </div>
+     <!-- SEND TOKEN TO INDEX.JS -->
+    <input type='hidden' id='token' name='token' />
+    <input type='hidden' id='projectId' name='projectId' />
+    <input type='hidden' id='request_id' name='request_id' />
+     <div class="action">
+      <button id='upd_btn' class="action-button" style="margin-top: 15px">Change configuration</button>
+    </div>
+     </div>
+    </div>
+          
+      <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+        </div>
+  <!-- END CONTAINER -->   
+  </div>
+ <script>
+   
+    const upd_btn = document.getElementById('upd_btn');
+    upd_btn.addEventListener( 'click', function() {
+      console.log('CHANGE BTN PREMUTO');
+      window.location.href = "/bcserver/setting?project_id=" + projectId.value + "&change=" + 'yes';
+    });
+
+   
+  </script>
+</body>
+</html>

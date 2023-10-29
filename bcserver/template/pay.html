@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--
+    <link rel="stylesheet" href="../css/configure.css">
+-->
+  <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+      body {
+        font-family: 'Poppins', serif;
+        text-align: center;
+      }
+      table {
+       border-collapse: collapse;
+       width: 100%;
+      }
+      th, td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+  
+    </style>
+  
+</head>
+<body>
+  
+  <!-- START CREATEDPAY -->
+   <div class="row" id="createdPay">
+     <p class="subtitle" id="app_name" style="text-align:center;margin-top: 0px;"><h3>Booking detail</h3></p>
+    <br>
+     <table id="mytable" style="width:100%">
+            <tbody>
+                <tr>
+                    <td style="text-align: left; width:100px !important;">Property name</td>
+                    <td style="text-align: left;">{{name_propriety}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; width:100px !important;">Check-in date</td>
+                    <td style="text-align: left;">{{arrivalDate}}</td>
+                </tr>
+               <tr>
+                    <td style="text-align: left; width:100px !important;">Check-out date</td>
+                    <td style="text-align: left;"> {{departureDate}}</td>
+                </tr>
+               <tr>
+                  <td style="text-align: left; width:100px !important;">Currency</td>
+                    <td style="text-align: left;">{{currency_propriety}}</td>
+                </tr>
+               <tr>
+                  <td style="text-align: left; width:100px !important;">Amount</td>
+                   <td style="text-align: left;">{{total_propriety}}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; width:100px !important;">Number of guests</td>
+                    <td style="text-align: left;">{{number_people}}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; width:100px !important;">Name</td>
+                    <td style="text-align: left;">{{firstname}} {{lastname}}</td>
+                </tr>
+               <tr>
+                  <td style="text-align: left; width:100px !important;">Mail</td>
+                    <td style="text-align: left;">{{email}}</td>
+              </tr>
+              <tr>
+                  <td style="text-align: left; width:100px !important;">Booking code</td>
+                    <td style="text-align: left;">{{booking_code}}</td>
+                </tr>
+            </tbody>
+        </table>
+     <div class="action flex-item">
+      <button id='send_pay_btn' class="action-button" style="margin-top: 15px;margin-left:0px;">Pay</button>
+    </div>
+      <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+        </div>
+  </div>
+  <!-- END CREATEDPAY -->
+  <!-- HOME PAGE -->
+   <div class="row" id="summaryPay" style='display: none'>
+        <div class="flex-item">
+          <img src="/img/stripe.png" width="70" height="auto"  />
+          <br><br>
+           <p class="subtitle" id="app_send" style="margin-top: 10px;">Payment created on Stripe!</p>
+        </div>
+       <br><br>
+      <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+        </div>
+     </div>
+  
+  
+
+  <!-- SEND TOKEN TO INDEX.JS -->
+  <!-- SYSTEM PARAMETERS -->
+    <input type='hidden' id='token' name='token' value={{token}} />
+    <input type='hidden' id='projectId' name='projectId' value={{projectId}} />
+    <input type='hidden' id='request_id' name='request_id' value={{request_id}} />
+    <!-- BOOK PARAMETERS -->
+    <input type='hidden' id='arrivalDate' name='arrivalDate' value={{arrivalDate}} />
+    <input type='hidden' id='departureDate' name='departureDate' value={{departureDate}} />
+    <input type='hidden' id='number_people' name='number_people' value={{number_people}} />
+    <!-- PROPRIETY PARAMETERS -->
+    <input type='hidden' id='name_propriety' name='name_propriety' value={{name_propriety}} />
+    <input type='hidden' id='currency_propriety' name='currency_propriety' value={{currency_propriety}} />
+    <input type='hidden' id='total_propriety' name='total_propriety' value={{total_propriety}} />
+     <!-- GUEST PARAMETERS -->
+    <input type='hidden' id='firstname' name='firstname' value={{firstname}} />
+    <input type='hidden' id='lastname' name='lastname' value={{lastname}} />
+    <input type='hidden' id='mail' name='mail' value={{email}} />
+   <!-- BOOKING PARAMETERS -->
+    <input type='hidden' id='booking_code' name='booking_code' value={{booking_code}} />
+    <input type='hidden' id='description' name='description' value={{description}} />
+    <input type='hidden' id='reservationsid' name='reservationsid' value={{reservationsid}} />
+
+    
+  
+<!-- START SCRIPT -->
+  <script>
+
+                        
+
+
+   
+    function sendData( data, url ) {
+      const XHR = new XMLHttpRequest();
+      let urlEncodedData = "",
+          urlEncodedDataPairs = [],
+          name;
+      for( name in data ) {
+        urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
+      }
+      urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+       console.log( 'urlEncodedData', urlEncodedData ); 
+       console.log( 'Payment/1', url ); 
+      XHR.addEventListener("loadend", function(event) {
+        if (url == '/bcserver/payment/created') {
+          let createdPay = document.getElementById('createdPay');
+          createdPay.style.display = "none";
+          let summaryPay = document.getElementById('summaryPay');
+          summaryPay.style.display = "block";
+        }
+        console.log( 'Payment/2', url ); 
+      });
+      XHR.addEventListener( 'error', function(event) {
+        console.log( 'Oops! Something went wrong.' );
+      } );
+      //XHR.open( 'POST', '/payment/created' );
+      XHR.open( 'POST', url );
+      XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+      XHR.send( urlEncodedData );
+    }
+
+    
+    const btnPaySend = document.getElementById('send_pay_btn');
+    const error = document.getElementById('error');
+    btnPaySend.addEventListener( 'click', function() {
+      const currency = document.getElementById('currency_propriety');
+      const amount = document.getElementById('total_propriety');
+      const description = document.getElementById('description');
+      const customer_mail = document.getElementById('mail');
+      const customer_name = document.getElementById('firstname').value + ' ' + document.getElementById('lastname').value;
+      const token = document.getElementById('token');
+      const reservationsid = document.getElementById('reservationsid');
+      console.log("Payment/projectId: ", projectId.value);
+      console.log("Payment/request_id: ", request_id.value);
+      console.log("Payment/currency: ", currency.value);
+      console.log("Payment/amount insert: ", amount.value);
+      console.log("Payment/customer_name: ", customer_name);
+      console.log("Payment/mail_correct: ", customer_mail.value);
+      console.log("Payment/description: ", description.value);
+      console.log("Payment/Token: ", token.value);
+      console.log("Payment/reservationsid: ", reservationsid.value);
+      if ( customer_mail.value != '' ) { 
+      if ((amount.value*1) > 0 ) {
+        if (token.value != 'undefined') {
+          sendData( {
+          currencyList:currency.value,
+          amount: amount.value,
+          description: description.value,
+          token:token.value,
+          projectId:projectId.value,
+          request_id:request_id.value,
+          customer_mail:customer_mail.value,
+          customer_name:customer_name,
+          reservationsid:reservationsid.value
+        }, '/bcserver/payment/created');
+        } else {
+           console.log('NO TOKEN')
+        }
+      }  else {
+        amount.value = 0;
+      }
+      } else {
+        // THE MAIL IS INCORRECT
+        document.getElementById('app_err1').style.visibility = "visible";
+        console.log('app_err is visible1',document.getElementById('app_err1').style.visible);
+      } 
+    });
+
+   // CHANGE COLOR WHILE RE_WRITE THE INPUT TEXT MAIL
+    function reWrite(element) {
+      document.getElementById(element);
+      document.getElementById(element).style.color='black';
+      if(element === 'customer_mail'){
+        document.getElementById('app_err1').style.visibility = "hidden";
+        console.log('app_err is hidden',document.getElementById('app_err1').style.visible);
+      }
+      if(element === 'amount'){
+        document.getElementById('app_err2').style.visibility = "hidden";
+        console.log('app_err is hidden',document.getElementById('app_err2').style.visible);
+      }
+
+      
+    }
+
+     function Previous() {
+            window.history.back()
+        }
+   
+  </script>
+<!-- END SCRIPT -->
+</body>
+  

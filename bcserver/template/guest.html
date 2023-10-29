@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--
+    <link rel="stylesheet" href="../css/configure.css">
+-->
+  <link rel="stylesheet" href="/css/base.css">
+<!--
+  <link rel="stylesheet" href="https://booking-server.leomirco.repl.co/css/base.css">
+  -->
+    <style>
+      body {
+        font-family: 'Poppins', serif;
+        text-align: center;
+      }
+      table {
+       border-collapse: collapse;
+       width: 100%;
+      }
+      th, td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+     
+  
+    </style>
+  
+</head>
+<body>
+  <div id="form" class="container" style="display:flex; align-items: center; justify-content: center; text-align: center;">
+    <!-- START CREATEDBOOK -->
+   <div class="row" id="createdBook">
+     <p class="subtitle" id="app_name" style="text-align:center;margin-top: 0px;">
+       <button  onclick="Previous()" style="padding: 1px;margin-left:0px;margin-bottom:0px;"><div style="font-size: 16px"> < </div></button>
+       <h3>Enter your details</h3></p>
+     <br>
+    <div class="form-group">
+       <label class="input-label" for="customer_name">First name*</label>
+       <div style="display: flex; flex-direction: row;">
+         <div style="display: flex; flex-direction: row; align-items: center;">
+          <input type="text" class="form-control copy-form custom-input" name="customer_name" id="customer_name" placeholder="Customer first name" oninput="reWrite('customer_name')" required/>
+         </div>
+        </div>
+     </div>
+
+      <div class="form-group">
+       <label class="input-label" for="customer_last_name">Last name*</label>
+       <div style="display: flex; flex-direction: row;">
+         <div style="display: flex; flex-direction: row; align-items: center;">
+          <input type="text" class="form-control copy-form custom-input" name="customer_last_name" id="customer_last_name" placeholder="Customer last name" oninput="reWrite('customer_last_name')" required/>
+         </div>
+        </div>
+     </div>
+
+    <div class="form-group">
+      <label class="input-label" for="customer_mail">Mail*</label>
+       <div style="display: flex; flex-direction: row;">
+          <div style="display: flex; flex-direction: row; align-items: center;">
+          <input type="email" class="form-control copy-form custom-input" name="customer_mail" id="customer_mail" placeholder="Customer mail" oninput="reWrite('customer_mail')" required/>
+        </div>
+      </div>
+      <label class="input-error" id="app_err1" style="visibility: hidden;">the email is incorrect/required</label>
+   </div>
+
+     
+     
+    <div class="form-group" style="display:none">
+   <label class="input-label" for="description">Description</label>
+     <div style="display: flex; flex-direction: row;">
+          <div style="display: flex; flex-direction: row; align-items: center;">
+            <textarea id="description" class="form-control copy-form custom-input" name="description" rows="4" cols="30" required placeholder="Payment description" oninput="reWrite('description')"></textarea>
+          </div>
+       </div>
+   </div>
+     
+     
+    <div class="action flex-item">
+      <button id='send_book_btn' class="action-button" style="margin-top: 0px;margin-left:0px;">Book</button>
+      
+    </div>
+      <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+      </div>
+  </div>
+  <!-- END CREATEDBOOK -->
+  
+
+ <!-- END CONTAINER -->   
+ </div>
+
+  
+  
+
+  <!-- SEND TOKEN TO INDEX.JS -->
+  <!-- SYSTEM PARAMETERS -->
+    <input type='hidden' id='token' name='token' value={{token}} />
+    <input type='hidden' id='projectId' name='projectId' value={{projectId}} />
+    <input type='hidden' id='request_id' name='request_id' value={{request_id}} />
+    <!-- BOOK PARAMETERS -->
+    <input type='hidden' id='arrivalDate' name='arrivalDate' value={{arrivalDate}} />
+    <input type='hidden' id='departureDate' name='departureDate' value={{departureDate}} />
+    <input type='hidden' id='number_people' name='number_people' value={{number_people}} />
+    <input type='hidden' id='propriety_id' name='propriety_id' value={{propriety_id}} />
+    <!-- PROPRIETY PARAMETERS -->
+    <input type='hidden' id='name_propriety' name='name_propriety' value={{name_propriety}} />
+    <input type='hidden' id='currency_propriety' name='currency_propriety' value={{currency_propriety}} />
+    <input type='hidden' id='total_propriety' name='total_propriety' value={{total_propriety}} />
+    <input type='hidden' id='max_occ_propriety' name='max_occ_propriety' value={{max_occ_propriety}} />
+     <!-- GUEST PARAMETERS -->
+    <input type='hidden' id='name_guest' name='name_guest' value={{name_guest}} />
+    <input type='hidden' id='last_name_guest' name='last_name_guest' value={{last_name_guest}} />
+    <input type='hidden' id='mail_guest' name='mail_guest' value={{mail_guest}} />
+    <input type='hidden' id='description_guest' name='description_guest' value={{description_guest}} />
+
+    
+<!-- START SCRIPT -->
+  <script>
+    // CHANGE COLOR WHILE RE_WRITE THE INPUT TEXT MAIL
+    function reWrite(element) {
+      document.getElementById(element);
+      document.getElementById(element).style.color='black';
+      if(element === 'customer_mail'){
+        document.getElementById('app_err1').style.visibility = "hidden";
+        console.log('app_err is hidden',document.getElementById('app_err1').style.visible);
+      } 
+    }
+
+    //START SCRIPT FOR BOOK
+    const btnBookSend = document.getElementById('send_book_btn');
+     btnBookSend.addEventListener( 'click', function() {
+        console.log('BUTTON BOOK START');
+        //SEND PARAMETER
+        const token = document.getElementById('token');
+        console.log("token: ", token.value);
+        const projectId = document.getElementById('projectId');
+        console.log("projectId: ", projectId.value);
+        const request_id = document.getElementById('request_id');
+        console.log("request_id: ", request_id.value);
+       
+        const arrivalDate = document.getElementById('arrivalDate');
+        console.log("arrivalDate: ", arrivalDate.value);
+        const departureDate = document.getElementById('departureDate');
+        console.log("departureDate: ", departureDate.value);
+        const number_people = document.getElementById('number_people');
+        console.log("number_people: ", number_people.value);
+        
+        const name_propriety = document.getElementById('name_propriety');
+        console.log("name_propriety: ", name_propriety.value);
+        const total_propriety = document.getElementById('total_propriety');
+        console.log("total_propriety: ", total_propriety.value);
+        const currency_propriety = document.getElementById('currency_propriety');
+        console.log("currency_propriety: ", currency_propriety.value);
+       
+        const customer_name = document.getElementById('customer_name');
+        console.log("customer_name: ", customer_name.value);
+        const customer_last_name = document.getElementById('customer_last_name');
+        console.log("customer_last_name: ", customer_last_name.value);
+        const customer_mail = document.getElementById('customer_mail');
+        console.log("customer_mail: ", customer_mail.value);
+        const description = document.getElementById('description');
+        const propriety_id = document.getElementById('propriety_id');
+        console.log("propriety_id: ", propriety_id.value);
+        const max_occ_propriety = document.getElementById('max_occ_propriety');
+        console.log("max_occ_propriety: ", max_occ_propriety.value);
+        
+       description.value = 'Payment ' + name_propriety.value + ', check-in: ' + arrivalDate.value + ', check-out: ' + departureDate.value + ', number of beds: ' + number_people.value + ', total amount: ' + currency_propriety.value + ' ' + total_propriety.value;
+   
+
+       // VALIDATE CUSTOMER MAIL
+        var mail = false;
+        var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (customer_mail.value.match(mailformat)) {
+          customer_mail.focus();
+          mail_correct = true;
+        }
+        else {
+          customer_mail.focus();
+          mail_correct = false;
+        }
+       console.log("Guest/mail_correct: ", mail_correct);
+      //------------------------------------------------------------
+      if ( mail_correct == true && customer_mail.value != '' &&  customer_name.value !='' ) {
+          
+      window.location.href = "/bcserver/booking/created?arrivaldate="+arrivalDate.value + "&project_id=" + projectId.value + "&departuredate=" + departureDate.value + "&number_people=" + number_people.value + "&token=" + token.value + "&name_propriety=" + name_propriety.value + "&total_propriety=" + total_propriety.value + "&currency_propriety=" + currency_propriety.value + "&max_occ_propriety=" + max_occ_propriety.value + "&request_id=" + request_id.value + "&propriety_id=" + propriety_id.value + "&firstname=" + customer_name.value +"&lastname=" + customer_last_name.value + "&email=" + customer_mail.value + "&description=" + description.value;
+      
+  }
+  });
+    
+    function Previous() {
+            window.history.back()
+        }
+                                 
+  </script>
+<!-- END SCRIPT -->
+</body>
+  

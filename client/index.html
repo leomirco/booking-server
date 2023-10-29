@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Payment</title>
+
+    <link rel="stylesheet" href="./css/base.css" />
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script src="/utils.js" defer></script>
+    <script src="/indexstripe.js" defer></script>
+  </head>
+  <body>
+    <main>
+
+      <form id="payment-form">
+        <div id="payment-element">
+          <!-- Elements will create form elements here -->
+        </div>
+        <div class="flex-parent jc-center">
+        <button id="submit" class="action-button" style="margin-top: 25px;margin-left: 25px;">Pay now</button>
+        </div>
+        <div id="error-message">
+          <!-- Display error message to your customers here -->
+        </div>
+      </form>
+      <div class="row" id="paySent" style='display: none; margin-top: 70px;'>
+        <div class="flex-item">
+          <img src="/img/stripe.png" width="70" height="auto"  />
+           <p class="subtitle" id="app_send">Payment sent!</p>
+        </div>
+        <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="https://support-pre.tiledesk.com/dashboard/assets/img/logos/tiledesk-logo_new_gray.svg">
+        </div>
+      </div>
+      <div class ="input-label" id="messages" role="alert" style="visibility: hidden;margin-top: 40px; margin-left: 50px;"></div>
+    </main>
+  </body>
+</html>

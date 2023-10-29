@@ -1,0 +1,23 @@
+{
+  "name": "nodejs",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@replit/database": "^2.0.5",
+    "@tiledesk/tiledesk-chatbot-client": "^0.5.30",
+    "@tiledesk/tiledesk-client": "^0.10.2",
+    "@types/node": "^18.0.6",
+    "body-parser": "^1.20.2",
+    "express": "^4.18.2",
+    "handlebars": "^4.7.8",
+    "node-fetch": "^3.2.6",
+    "stripe": "^13.4.0"
+  }
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- 
+  <link rel="stylesheet" href="../css/configure.css">
+  -->
+<link rel="stylesheet" href="/css/base.css">
+    <style>
+      body {
+        font-family: 'Poppins', serif;
+        text-align: center;
+      }
+      table {
+       border-collapse: collapse;
+       width: 100%;
+      }
+      th, td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+     
+  
+    </style>
+  
+</head>
+<body>
+<div>
+<h3 style = "text-align: left;">
+ {{number_properties}} properties found
+</h3>  
+</div>
+          <table id="mytable" style="width:100%" onload="highlight(0)">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Currency</th>
+                    <th>Total</th>
+                    <th>Max occ.</th>
+                </tr>
+            </thead>
+
+            
+            <tbody>
+               {{#each apps}}
+                <tr onclick="highlight(this);">
+                    <td style="text-align: left;">{{this.name}}</td>
+                    <td>{{this.currency}}</td>
+                    <td>{{this.price}}</td>
+                    <td>{{this.maxOccupancy}}</td>
+                    <td style="display: none">{{this.id}}</td>
+                </tr>
+              {{/each}}  
+            </tbody>
+        </table>
+   
+  <!-- SEND TOKEN TO INDEX.JS -->
+    <input type='hidden' id='token' name='token' value={{token}} />
+    <input type='hidden' id='projectId' name='projectId' value={{projectId}} />
+    <input type='hidden' id='arrivalDate' name='arrivalDate' value={{arrivalDate}} />
+    <input type='hidden' id='departureDate' name='departureDate' value={{departureDate}} />
+    <input type='hidden' id='number_people' name='number_people' value={{number_people}} />
+    <input type='hidden' id='name_propriety' name='name_propriety' value={{name_propriety}} />
+    <input type='hidden' id='total_propriety' name='total_propriety' value={{total_propriety}} />
+    <input type='hidden' id='currency_propriety' name='currency_propriety' value={{currency_propriety}} />
+    <input type='hidden' id='max_occ_propriety' name='max_occ_propriety' value={{max_occ_propriety}} />
+    <input type='hidden' id='request_id' name='request_id' value={{request_id}} />
+    <input type='hidden' id='propriety_id' name='propriety_id' value={{propriety_id}} />
+  
+    <br>
+    <button id='upd_btn' onclick="getSelectedRow()">Reserve</button>
+     <div class="info-wrapper" style="margin-left:35px;margin-bottom:10px;">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+      </div>
+<script>
+  var SelectedRowName = "";
+  var SelectedRowTotal = "";
+  var SelectedRowMaxOcc = "";
+  var SelectedRowCurrency = "";
+  var SelectedRowId = "";
+  
+  function highlight(row) {
+      console.log('BBLIST/ROW SELECTED', row);
+      SelectedRowName=row.cells[0].textContent;
+      SelectedRowCurrency=row.cells[1].textContent;
+      SelectedRowTotal=row.cells[2].textContent;
+      SelectedRowMaxOcc=row.cells[3].textContent;
+      SelectedRowId=row.cells[4].textContent;
+      deHighlight();
+      row.style.backgroundColor = 'coral';
+      row.classList.toggle("selectedRow");
+  }
+  
+  function deHighlight() { 
+      let table = document.getElementById("mytable");
+      let rows = table.rows;
+      for (let i = 0; i < rows.length; i++) {
+          rows[i].style.backgroundColor = "transparent";
+      }   
+  }
+  
+  function getSelectedRow() {
+      //alert(SelectedRow);
+      console.log('BBLIST/PROPERTY NAME SELECTED', SelectedRowName);
+      document.getElementById('name_propriety').value = SelectedRowName;
+      console.log('BBLIST/PROPERTY TOTAL SELECTED', SelectedRowTotal);
+      document.getElementById('total_propriety').value = SelectedRowTotal;
+      console.log('BBLIST/PROPERTY MAXOCC SELECTED', SelectedRowCurrency);
+      document.getElementById('currency_propriety').value = SelectedRowCurrency;
+      console.log('BBLIST/PROPERTY MAXOCC SELECTED', SelectedRowMaxOcc);
+      document.getElementById('max_occ_propriety').value = SelectedRowMaxOcc;
+      console.log('BBLIST/PROPERTY ID PROPRIETY SELECTED', SelectedRowId);
+      document.getElementById('propriety_id').value = SelectedRowId;
+  }
+ 
+  const upd_btn = document.getElementById('upd_btn');
+  upd_btn.addEventListener( 'click', function() {
+      console.log('BTN PREMUTO');
+      const token = document.getElementById('token');
+      console.log("token: ", token.value);
+      const projectId = document.getElementById('projectId');
+      console.log("projectId: ", projectId.value);
+      const arrivalDate = document.getElementById('arrivalDate');
+      console.log("arrivalDate: ", arrivalDate.value);
+      const departureDate = document.getElementById('departureDate');
+      console.log("departureDate: ", departureDate.value);
+      const number_people = document.getElementById('number_people');
+      console.log("number_people: ", number_people.value);
+      const name_propriety = document.getElementById('name_propriety');
+      console.log("name_propriety: ", name_propriety.value);
+      const total_propriety = document.getElementById('total_propriety');
+      console.log("total_propriety: ", total_propriety.value);
+      const currency_propriety = document.getElementById('currency_propriety');
+      console.log("currency_propriety: ", currency_propriety.value);
+      const max_occ_propriety = document.getElementById('max_occ_propriety');
+      console.log("max_occ_propriety: ", max_occ_propriety.value);
+      const request_id = document.getElementById('request_id');
+      console.log("request_id: ", request_id.value);
+      const propriety_id = document.getElementById('propriety_id');
+      console.log("propriety_id: ", propriety_id.value);
+
+    
+      if (arrivalDate.value != '' && projectId.value != '' && departureDate.value != '' ) {
+         window.location.href = "/bcserver/guest?arrival_date="+arrivalDate.value + "&project_id=" + projectId.value + "&departure_date=" + departureDate.value + "&number_people=" + number_people.value + "&token=" + token.value + "&name_propriety=" + name_propriety.value + "&total_propriety=" + total_propriety.value + "&currency_propriety=" + currency_propriety.value + "&max_occ_propriety=" + max_occ_propriety.value + "&request_id=" + request_id.value + "&propriety_id=" + propriety_id.value;
+      } else {
+        // if (stripe_publishable_key.value == '') {
+           //document.getElementById('app_err1').style.visibility = "visible";
+        // }
+     
+      }
+    });
+</script>
+</body>
+  

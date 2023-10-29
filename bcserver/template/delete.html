@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap-theme.min.css"
+        integrity="sha384-6pzBo3FDv/PJ8r2KRkGHifhEocL+1X2rVCTTkUfGk7/0pbek5mMa1upzvWbrUbOZ" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  
+    <script src="//code.jquery.com/jquery-1.12.0.min.js"></script>
+    <script src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"
+        integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous">
+        </script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!--
+    <link rel="stylesheet" href="../css/configure.css">
+-->
+  <link rel="stylesheet" href="/css/base.css">
+
+    <style>
+      body {
+        font-family: 'Poppins', serif;
+        text-align: center;
+      }
+      table {
+       border-collapse: collapse;
+       width: 100%;
+      }
+      th, td {
+        padding: 8px;
+        text-align: center;
+        border-bottom: 1px solid #ddd;
+      }
+  
+    </style>
+  
+</head>
+<body>
+  
+  <!-- START CREATEDPAY -->
+   <div class="row" id="createdPay">
+     <p class="subtitle" id="app_name" style="text-align:center;margin-top: 0px;"><h3>Booking detail</h3></p>
+    <br>
+    {{#if error}}
+       <br><br><br><br>
+        <p class="subtitle" id="app_send" style="margin-top: 10px;"> The reservation number entered was not found!</p>
+      <br><br><br><br>
+     {{else}}
+     <table id="mytable" style="width:100%">
+            <tbody>
+                <tr>
+                    <td style="text-align: left; width:100px !important;">Property name</td>
+                    <td style="text-align: left;">{{name_propriety}}</td>
+                </tr>
+                <tr>
+                    <td style="text-align: left; width:100px !important;">Check-in date</td>
+                    <td style="text-align: left;">{{arrivalDate}}</td>
+                </tr>
+               <tr>
+                    <td style="text-align: left; width:100px !important;">Check-out date</td>
+                    <td style="text-align: left;"> {{departureDate}}</td>
+                </tr>
+               <tr>
+                  <td style="text-align: left; width:100px !important;">Currency</td>
+                    <td style="text-align: left;">{{currency_propriety}}</td>
+                </tr>
+               <tr>
+                  <td style="text-align: left; width:100px !important;">Amount</td>
+                   <td style="text-align: left;">{{total_propriety}}</td>
+                </tr>
+                <tr>
+                  <td style="text-align: left; width:100px !important;">Name</td>
+                    <td style="text-align: left;">{{firstname}} {{lastname}}</td>
+                </tr>
+               <tr>
+                  <td style="text-align: left; width:100px !important;">Mail</td>
+                    <td style="text-align: left;">{{email}}</td>
+              </tr>
+              <tr>
+                  <td style="text-align: left; width:100px !important;">Booking code</td>
+                    <td style="text-align: left;">{{booking_code}}</td>
+                </tr>
+            </tbody>
+        </table>
+      <div class="action flex-item">
+      <button id='send_del_btn' class="action-button" style="margin-top: 15px;margin-left:0px;">Cancel reservation</button>
+     </div>
+     {{/if}}
+      <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+        </div>
+  </div>
+  <!-- END CREATEDPAY -->
+  <!-- HOME PAGE -->
+   <div class="row" id="summaryPay" style='display: none'>
+        <div class="flex-item">
+          <img src="/img/stripe.png" width="70" height="auto"  />
+          <br><br>
+           <p class="subtitle" id="app_send" style="margin-top: 10px;"> Reservation number removed {{booking_code}}</p>
+        </div>
+       <br><br>
+      <div class="info-wrapper">
+          <label>Powered by</label>
+          <img style="max-width: 30%;!important;" src="/img/tiledesk-logo_new_gray.svg">
+        </div>
+     </div>
+  
+  
+
+  <!-- SEND TOKEN TO INDEX.JS -->
+  <!-- SYSTEM PARAMETERS -->
+    <input type='hidden' id='token' name='token' value={{token}} />
+    <input type='hidden' id='projectId' name='projectId' value={{projectId}} />
+    <input type='hidden' id='request_id' name='request_id' value={{request_id}} />
+    <!-- BOOK PARAMETERS -->
+    <input type='hidden' id='arrivalDate' name='arrivalDate' value={{arrivalDate}} />
+    <input type='hidden' id='departureDate' name='departureDate' value={{departureDate}} />
+    <input type='hidden' id='number_people' name='number_people' value={{number_people}} />
+    <!-- PROPRIETY PARAMETERS -->
+    <input type='hidden' id='name_propriety' name='name_propriety' value={{name_propriety}} />
+    <input type='hidden' id='currency_propriety' name='currency_propriety' value={{currency_propriety}} />
+    <input type='hidden' id='total_propriety' name='total_propriety' value={{total_propriety}} />
+     <!-- GUEST PARAMETERS -->
+    <input type='hidden' id='firstname' name='firstname' value={{firstname}} />
+    <input type='hidden' id='lastname' name='lastname' value={{lastname}} />
+    <input type='hidden' id='mail' name='mail' value={{email}} />
+   <!-- BOOKING PARAMETERS -->
+    <input type='hidden' id='booking_code' name='booking_code' value={{booking_code}} />
+    <input type='hidden' id='description' name='description' value={{description}} />
+
+    
+  
+<!-- START SCRIPT -->
+  <script>
+
+                        
+
+
+   
+    function sendData( data, url ) {
+      const XHR = new XMLHttpRequest();
+      let urlEncodedData = "",
+          urlEncodedDataPairs = [],
+          name;
+      for( name in data ) {
+        urlEncodedDataPairs.push( encodeURIComponent( name ) + '=' + encodeURIComponent( data[name] ) );
+      }
+      urlEncodedData = urlEncodedDataPairs.join( '&' ).replace( /%20/g, '+' );
+       console.log( 'urlEncodedData', urlEncodedData ); 
+       console.log( 'Delete/1', url ); 
+      XHR.addEventListener("loadend", function(event) {
+        if (url == '/bcserver/deleteReservation') {
+          let createdPay = document.getElementById('createdPay');
+          createdPay.style.display = "none";
+          let summaryPay = document.getElementById('summaryPay');
+          summaryPay.style.display = "block";
+        }
+        console.log( 'Delete/2', url ); 
+      });
+      XHR.addEventListener( 'error', function(event) {
+        console.log( 'Oops! Something went wrong.' );
+      } );
+      XHR.open( 'POST', url );
+      XHR.setRequestHeader( 'Content-Type', 'application/x-www-form-urlencoded' );
+      XHR.send( urlEncodedData );
+    }
+
+    
+    const btnDelSend = document.getElementById('send_del_btn');
+    const error = document.getElementById('error');
+    btnDelSend.addEventListener( 'click', function() {
+      const bookingcode = document.getElementById('booking_code');
+      const token = document.getElementById('token');
+      console.log("Payment/projectId: ", projectId.value);
+      console.log("Delete/booking_code: ", bookingcode.value);
+      if ( bookingcode.value != '' ) { 
+        if (token.value != 'undefined') {
+          sendData( {
+          projectid: projectId.value,
+          reservationId: bookingcode.value
+        }, '/bcserver/deleteReservation');
+        } else {
+           console.log('NO TOKEN')
+        }
+      } else {
+        // THE MAIL IS INCORRECT
+        document.getElementById('app_err1').style.visibility = "visible";
+        console.log('app_err is visible1',document.getElementById('app_err1').style.visible);
+      } 
+    });
+
+   
+  </script>
+<!-- END SCRIPT -->
+</body>
+  
