@@ -414,7 +414,7 @@ router.get('/bblist', async (req, res) => {
   }// END IF
 });
 
-//INSERT THE GUEST INFO AND CREATE RESERVATION
+//INSERT THE GUEST INFO
 router.get('/guest', async (req, res) => {
   console.log('/GUEST - INSERT THE GUEST INFO');
   console.log('Request query: ', req.query);
@@ -482,7 +482,7 @@ router.get('/guest', async (req, res) => {
   }
 });
 
-//INSERT THE GUEST INFO AND CREATE RESERVATION
+//CREATE RESERVATION
 router.get('/booking/created', async (req, res) => {
   console.log('/GUEST - INSERT THE GUEST INFO');
   console.log('Request query: ', req.query);
@@ -687,7 +687,7 @@ router.get('/booking/delete/:reservationId', async (req, res) => {
 });
 
 
-//INSERT THE GUEST INFO AND CREATE RESERVATION
+//INSERT THE GUEST INFO AND CREATE PAYMENT
 router.post('/payment/created', async (req, res) => {
   console.log('/PAY - CREATE THE PAYMENT');
   let messageid = "";
@@ -1082,7 +1082,7 @@ router.post('/webhook', async (req, res) => {
 });
 
 //--------------------------------------------------------------------------------------------------------------------------
-// START SMOOBU (INTEGRATION) API
+// START BOOKING SYSTEM INTEGRATION API
 //--------------------------------------------------------------------------------------------------------------------------
 
 // GET USER
@@ -1108,7 +1108,7 @@ router.get('/getUser', async (req, res) => {
 
 });
 
-// TEST FUNCTION CHECK APARTMENT AVAILABILITY
+// TEST FUNCTION CHECK APPARTMENT AVAILABILITY
 //    "arrivalDate" : "2023-08-08",
 //    "departureDate":  "2023-08-10",
 //    "apartments": [1818704],
@@ -1361,8 +1361,9 @@ router.get('/getReservationInfo/:reservationId', async (req, res) => {
   }
 });
 
-
-// RESERVATION CHATBOT 
+//----------------------------------------------------------------------------------------------------------
+// CHATBOT Comunication 
+//----------------------------------------------------------------------------------------------------------
 // WORKFLOW API
 // https://booking-server.leomirco.repl.co/bcserver/bot
 router.post('/bot', async (req, res) => {

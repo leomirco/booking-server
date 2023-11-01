@@ -71,6 +71,7 @@ class smoobuService {
   //    "departureDate":  "2023-08-10",
   //    "apartments": [1818704],
   //    "customerId": 660362
+  //    "guests": 1
   async getAvailability(bodydata) {
     console.log("smoobuService/getAvailability");
     try {
@@ -217,7 +218,7 @@ class smoobuService {
     console.log("smoobuService/getallreservation");
     try {
       console.log("smoobuService/query:", bodydata);
-      const url = this.smoobu_url + '/api/reservations' + '?arrivalFrom=' + bodydata.arrivalFrom + '&arrivalTo=' + bodydata.arrivalTo + '&email=pandelli.ilenia@gmail.com';
+      const url = this.smoobu_url + '/api/reservations' + '?arrivalFrom=' + bodydata.arrivalFrom + '&arrivalTo=' + bodydata.arrivalTo + '&email=' + bodydata.email;
       console.log('smoobuService/SMOOBU_URL', url);
       const customHeaders = {
         'Api-Key': this.user_key,
