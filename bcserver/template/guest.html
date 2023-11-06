@@ -66,6 +66,7 @@
           <input type="text" class="form-control copy-form custom-input" name="customer_name" id="customer_name" placeholder="Customer first name" oninput="reWrite('customer_name')" required/>
          </div>
         </div>
+      <label class="input-error" id="app_err3" style="visibility: hidden;">the first name is required</label>
      </div>
 
       <div class="form-group">
@@ -75,6 +76,7 @@
           <input type="text" class="form-control copy-form custom-input" name="customer_last_name" id="customer_last_name" placeholder="Customer last name" oninput="reWrite('customer_last_name')" required/>
          </div>
         </div>
+        <label class="input-error" id="app_err2" style="visibility: hidden;">the last name is required</label>
      </div>
 
     <div class="form-group">
@@ -171,7 +173,7 @@
         console.log("number_people: ", number_people.value);
         
         const name_propriety = document.getElementById('name_propriety');
-        console.log("name_propriety: ", name_propriety.value);
+        console.log("name_propriety 1: ", name_propriety.value);
         const total_propriety = document.getElementById('total_propriety');
         console.log("total_propriety: ", total_propriety.value);
         const currency_propriety = document.getElementById('currency_propriety');
@@ -194,18 +196,36 @@
 
        // VALIDATE CUSTOMER MAIL
         var mail = false;
+       const err_mail = document.getElementById('app_err1');
+       const err_firstname = document.getElementById('app_err3');
+       const err_lastname = document.getElementById('app_err2');
+       if (customer_name.value == '') {
+          err_firstname.style.visibility= "visible";
+       } else {
+         err_firstname.style.visibility= "hidden";
+       }
+       if (customer_last_name.value == '') {
+         err_lastname.style.visibility= "visible";
+       } else {
+        err_lastname.style.visibility= "hidden";
+       }
+       console.log("err_mail/mail_correct 1: ", err_mail);
         var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
         if (customer_mail.value.match(mailformat)) {
           customer_mail.focus();
+          err_mail.style.visibility= "hidden";
+          console.log("err_mail/mail_correct 3: ", err_mail);
           mail_correct = true;
         }
         else {
           customer_mail.focus();
+          err_mail.style.visibility= "visible";
+          console.log("err_mail/mail_correct 2: ", err_mail);
           mail_correct = false;
         }
        console.log("Guest/mail_correct: ", mail_correct);
       //------------------------------------------------------------
-      if ( mail_correct == true && customer_mail.value != '' &&  customer_name.value !='' ) {
+      if ( mail_correct == true && customer_mail.value != '' &&  customer_name.value !='' && customer_last_name.value !='' ) {
           
       window.location.href = "/bcserver/booking/created?arrivaldate="+arrivalDate.value + "&project_id=" + projectId.value + "&departuredate=" + departureDate.value + "&number_people=" + number_people.value + "&token=" + token.value + "&name_propriety=" + name_propriety.value + "&total_propriety=" + total_propriety.value + "&currency_propriety=" + currency_propriety.value + "&max_occ_propriety=" + max_occ_propriety.value + "&request_id=" + request_id.value + "&propriety_id=" + propriety_id.value + "&firstname=" + customer_name.value +"&lastname=" + customer_last_name.value + "&email=" + customer_mail.value + "&description=" + description.value;
       

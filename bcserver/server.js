@@ -17,6 +17,9 @@ var PORT = process.env.PORT;
 var TILEDESK_API_KEY = process.env.TILEDESK_API_KEY;
 var TILEDESK_API_VER = process.env.TILEDESK_API_VER;
 var DOMAIN = process.env.DOMAIN;
+// SECRET_DEBUG
+var DEBUG = process.env.DEBUG;
+console.log('DEBUG MODE: ', DEBUG);
 //var BOOKING_API = process.env.BOOKING_API;
 //console.log('BOOKING_API:', BOOKING_API);
 // DATABASE KVBASE
@@ -122,9 +125,11 @@ router.get('/setting', async (req, res) => {
 
   var projectId = req.query.project_id;
   var change = 'no';
-  if (req.query.change != 'undefined') {
+  if (new String(req.query.change).valueOf() != (new String("undefined").valueOf())) {
     change = req.query.change;
+    console.log('ciao');
   }
+  console.log('/SETTING - req.query.change', req.query.change);
   console.log('/SETTING - change', change);
   var sett = await db.get(projectId);
   console.log('/SETTING - Read settings APP', sett);
@@ -135,10 +140,35 @@ router.get('/setting', async (req, res) => {
   var booking_userkey;
   var booking_api_url;
   var customerid;
-
-  // ATTENTO TEST
-  sett.booking_sistem_integration_api = process.env.BOOKING_API;
-
+  var booking_userkey;
+  // CONTROLL IF SETT EXIST
+  if (sett == null) {
+    //CHANGE  SETTINGS
+    console.log('/PAYMENT - CHANGE SETTINGS!');
+    var log = false;
+    page = '/setting.html';
+    dir = '/setting';
+    readHTMLFile(page, dir, (err, html) => {
+      if (err) {
+        console.log("/PAYMENT - (ERROR) Read html file: ", err);
+      }
+      var template = handlebars.compile(html);
+      var replacements = {
+        stripe_publishable_key: stripe_publishable_key,
+        stripe_secret_key: stripe_secret_key,
+        stripe_wehook_secret: stripe_wehook_secret,
+        booking_userkey: booking_userkey,
+        booking_sistem_integration_api: booking_sistem_integration_api,
+        booking_api_url: booking_api_url,
+        customerid: customerid
+      }
+      if (log) {
+        console.log("/PAYMENT - Replacements: ", replacements);
+      }
+      var html = template(replacements);
+      res.send(html);
+    })
+  } else {
   stripe_publishable_key = sett.stripe_publishable_key;
   stripe_wehook_secret = sett.stripe_wehook_secret;
   stripe_secret_key = sett.stripe_secret_key;
@@ -147,8 +177,6 @@ router.get('/setting', async (req, res) => {
   booking_api_url = sett.booking_api_url;
   customerid = sett.customerid;
   console.log('BOOKING_API:', booking_sistem_integration_api);
-
-  var booking_userkey;
   if (change === "yes") {
     //CHANGE  SETTINGS
     console.log('/PAYMENT - CHANGE SETTINGS!');
@@ -229,8 +257,8 @@ router.get('/setting', async (req, res) => {
         res.send(html);
       })
     }
-
   }
+} // END FIRST ELSE THE CONTROLL IF SETT EXIST
 });
 // SET CONFIGURATION STRIPE AND SMOOBY THE APP
 router.post('/configure', async (req, res) => {
@@ -319,7 +347,28 @@ router.get('/clientSecret', async (req, res) => {
 //--------------------------------------------------------------------------------------------------------------------------
 //  CONTROLLER API METHOD
 //--------------------------------------------------------------------------------------------------------------------------
-
+// DETAIL APP
+router.get('/detail', async (req, res) => {
+  console.log('READ APP Stripe Info');
+  console.log('Request query: ', req.query);
+  var projectId = req.query.projectId;
+  var log = false;
+  var page = '/detail.html';
+  var dir = '/template';
+  readHTMLFile(page, dir, (err, html) => {
+    if (err) {
+      console.log("(ERROR) Read html file: ", err);
+    }
+    var template = handlebars.compile(html);
+    var replacements = {
+    }
+    if (log) {
+      console.log("Replacements: ", replacements);
+    }
+    var html = template(replacements);
+    res.send(html);
+  })
+})
 // READ THE INFO
 // src: DOMAIN + '/bcserver/bblist' + '/?arrival_date=' + arrival_date + '&departure_date=' + departure_date + '&customerid=' + customerid + '&project_id=' + project_id + '&token=' + token + '&number_people=' + number_people,
 router.get('/bblist', async (req, res) => {
@@ -352,7 +401,7 @@ router.get('/bblist', async (req, res) => {
     var availability = [];
     for (var i in availabilityData.availableApartments) {
       var item = availabilityData
-      //console.log('userData.availableApartments[i]', item);
+      console.log('userData.availableApartments[i]', item);
 
       // CALL getAppartmentInfo Service for return APPARTMENT INFO 
       // GET APPARTMENT INFO 
@@ -364,20 +413,26 @@ router.get('/bblist', async (req, res) => {
       if (appartmentDataApp) {
         console.log('appartmentDataApp', appartmentDataApp.name);
       }
-      // --------------------------------------------------------------------------------------------
-      // --- ARRAY PRICE FOR TEST ATTENTO ONLY FOR TEST
-      const price = [200, 150, 100];
-
-      availability.push({
-        "id": item.availableApartments[i],
-        "name": appartmentDataApp.name,
-        // ATTENTO DA MODIFICARE IM PRO -- SOLO TEST
-        //"price": item.prices[item.availableApartments[i]].price,
-        // --------------------------------------------------------------------------------------------
-        "price": price[i],
-        "currency": appartmentDataApp.currency,
-        "maxOccupancy": appartmentDataApp.rooms.maxOccupancy,
-      });
+      if (DEBUG == 'true') {
+        console.log('DEBUG MODE ON: ', DEBUG);
+        const price = [200, 150, 100];
+        availability.push({
+          "id": item.availableApartments[i],
+          "name": appartmentDataApp.name,
+          "price": price[i],
+          "currency": appartmentDataApp.currency,
+          "maxOccupancy": appartmentDataApp.rooms.maxOccupancy,
+        });
+      } else {
+        console.log('DEBUG MODE OFF: ', DEBUG);
+        availability.push({
+          "id": item.availableApartments[i],
+          "name": appartmentDataApp.name,
+          "price": item.prices[item.availableApartments[i]].price,
+          "currency": appartmentDataApp.currency,
+          "maxOccupancy": appartmentDataApp.rooms.maxOccupancy,
+        });
+      }
     }
     console.log('availability', availability);
     console.log('availability length', availability.length);
@@ -427,7 +482,7 @@ router.get('/guest', async (req, res) => {
   //var customerid = req.query.customerid;
   var number_people = req.query.number_people;
   // PRORIETY SELECTED
-  var name_propriety = req.query.name_propriety;
+  var name_propriety = req.query.name_propriety.replace(/ /g, "_");
   var total_propriety = req.query.total_propriety;
   var currency_propriety = req.query.currency_propriety;
   var max_occ_propriety = req.query.max_occ_propriety;

@@ -71,6 +71,12 @@ select {
   outline: 0;
   border-bottom-color: white;
 }
+.input-label:focus{
+   border-color: blue;
+}
+.input-label.invalid:focus{
+   border-color: red;
+}
 .input-field:focus + .input-label, .input-field:valid + .input-label {
   color: #6658d3;
   transform: translateY(-1.5rem);
@@ -197,6 +203,9 @@ select {
 
 .custom-input:focus {
   border-color: #0ba2dc;
+}
+.custom-input.invalid:focus{
+   border-color: red;
 }
 
 .custom-tooltip {
@@ -462,7 +471,7 @@ select {
   padding-bottom: 15px;
 }
 .input-error {
-  font-size: 10px; 
+  font-size: 11px; 
   font-weight: 540;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
